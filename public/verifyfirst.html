@@ -1,0 +1,46 @@
+<!-- <!DOCTYPE html> -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Email Verification</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+      }
+      .container {
+        max-width: 400px;
+        margin: 100px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      h2 {
+        margin-bottom: 20px;
+      }
+      p {
+        margin-bottom: 20px;
+      }
+      .verification-status {
+        font-weight: bold;
+        color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Email Verification</h2>
+      <p>
+        Thank you for signing up! To complete your registration, please click
+        the verification link sent to your email.
+      </p>
+      <p class="verification-status" id="verification-status">
+        Your email is not verified yet.
+      </p>
+      <a href="./login.html">Login Now</a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="js/verifyMail.js"></script>
+  </body>
+</html>
