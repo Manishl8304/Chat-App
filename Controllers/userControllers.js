@@ -99,7 +99,8 @@ const sendVerificationEmail = async (newUser, req, res) => {
   if (check1) {
     await usersVerification.deleteOne({ userName: newUser.userName });
   }
-  const currentUrl = `${req.protocol}://${req.get("host")}`;
+  const currentUrl = `${req.protocol}://${req.get("host")}/`;
+  console.log(currentUrl);
   const uniqueString = uuidv4();
   const hashedString = await bcrypt.hash(uniqueString, 10);
   const newToken = await usersVerification.create({
@@ -109,13 +110,17 @@ const sendVerificationEmail = async (newUser, req, res) => {
     createdAt: Date.now(),
     expiresAt: Date.now() + 21600000,
   });
-  await sendEmail({
-    to: newUser.userEmail,
-    subject: "Verify Your Email",
-    text: `Open this to verify. ${
-      currentUrl + "users/verify/" + newUser._id + "/" + uniqueString
-    }`,
-  });
+  try {
+    await sendEmail({
+      to: newUser.userEmail,
+      subject: "Verify Your Email",
+      text: `Open this to verify. ${
+        currentUrl + "users/verify/" + newUser._id + "/" + uniqueString
+      }`,
+    });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 exports.login = catchAsync(async (req, res, next) => {
