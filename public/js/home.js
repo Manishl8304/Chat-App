@@ -6,7 +6,12 @@ const roomcode = document.getElementById("joinCode");
 const friendemail = document.getElementById("friendEmail");
 const pendinglist = document.getElementById("pendingList");
 const allfriendslist = document.getElementById("allFriendsList");
+const logout = document.getElementById("logout");
 
+logout.addEventListener("click", async () => {
+  const result = await axios.delete("/users/logout");
+  window.location.href = "/login";
+});
 createbtn.addEventListener("click", async () => {
   if (roomname.value == "") {
     alert("Enter Room Name");
@@ -88,13 +93,11 @@ const acceptRequest = async (str) => {
   const result = await axios.post("/mixed/accept", {
     requestName: str,
   });
-  console.log(result);
 };
 const deleteRequest = async (str) => {
   const result = await axios.post("/mixed/delete", {
     requestName: str,
   });
-  console.log(result);
 };
 
 const pvtchat = (ele) => {

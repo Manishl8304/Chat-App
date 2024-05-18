@@ -83,7 +83,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     verified: false,
   });
   try {
-    await sendVerificationEmail(newUser, res);
+    await sendVerificationEmail(newUser, req, res);
     res.status(201).json({
       Status: "Pending",
       Message: "Verification email has been sent",
@@ -94,14 +94,12 @@ exports.signup = catchAsync(async (req, res, next) => {
   }
 });
 
-const sendVerificationEmail = async (newUser, res) => {
-  console.log(newUser);
+const sendVerificationEmail = async (newUser, req, res) => {
   const check1 = await usersVerification.find({ userName: newUser.userName });
-  console.log(check1);
   if (check1) {
     await usersVerification.deleteOne({ userName: newUser.userName });
   }
-  const currentUrl = "http://localhost:8000/";
+  const currentUrl = `${req.protocol}://${req.get("host")}`;
   const uniqueString = uuidv4();
   const hashedString = await bcrypt.hash(uniqueString, 10);
   const newToken = await usersVerification.create({
@@ -162,6 +160,12 @@ exports.protect = catchAsync(async (req, res, next) => {
     );
   }
   req.user = currentUser;
-  console.log(req.user);
   next();
+});
+
+exports.logout = catchAsync(async (req, res, next) => {
+  res.cookie("jwt", "");
+  res.status(204).json({
+    status: "success",
+  });
 });

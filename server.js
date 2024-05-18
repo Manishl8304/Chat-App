@@ -79,9 +79,7 @@ io.on("connection", (socket) => {
     socket.join(obj.username);
   });
   socket.on("chat-pvt", async (obj) => {
-    console.log(obj);
     const formattedmsg = formatmsg(obj.From, obj.message);
-    console.log(formattedmsg);
     const xyz = await pvtData.create({
       Time: formattedmsg.time,
       From: obj.From,

@@ -16,7 +16,6 @@ exports.getRoom = catchAsync(async (req, res, next) => {
   const currentRoom = await Room.findOne({
     roomCode: req.body.roomCode,
   });
-  console.log(currentRoom);
   if (!currentRoom) {
     return next(new appError("No Such Room Exist", 404));
   }

@@ -40,7 +40,6 @@ socket.on("message", (message) => {
 });
 
 function outputmsg(msg) {
-  console.log(msg);
   const div = document.createElement("div");
   div.classList.add("message");
   div.innerHTML = `<p class="meta">${msg["username"]} <span>${msg["time"]}</span></p>

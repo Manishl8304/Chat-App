@@ -1,7 +1,6 @@
 const AppError = require("./../utils/appError");
 
 const sendErrorDev = (err, res) => {
-  console.log(err.name);
   res.status(err.statusCode).json({
     status: err.status,
     message: err.message,
@@ -15,7 +14,7 @@ const handleValidationError = (err) => {
   return new AppError(message, 400);
 };
 const handleCastError = (err) => {
-  const message = `invalid ${err.path} : ${err.value}`;
+  const message = `invalid ${err5.path} : ${err.value}`;
   return new AppError(message, 400);
 };
 exports.errorHandler = (err, req, res, next) => {

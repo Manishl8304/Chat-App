@@ -18,9 +18,7 @@ exports.sendRequest = catchAsync(async (req, res, next) => {
       return;
     }
     newArr.push(req.user.userName);
-    console.log(req.user.userName);
-    console.log(req.body.userEmail);
-    console.log(newArr);
+ 
     await Users.updateOne(
       { userEmail: req.body.userEmail },
       {
