@@ -7,13 +7,30 @@
     <style>
       body {
         font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
       }
       form {
-        max-width: 400px;
-        margin: 0 auto;
+        background-color: #fff;
         padding: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+      }
+      h2 {
+        text-align: center;
+        color: #333;
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #333;
       }
       input[type="email"],
       input[type="password"] {
@@ -33,6 +50,7 @@
         border-radius: 4px;
         cursor: pointer;
         width: 100%;
+        font-size: 16px;
       }
       input[type="submit"]:hover {
         background-color: #45a049;
@@ -41,12 +59,24 @@
         text-align: center;
         margin-top: 20px;
       }
+      .signup-link a {
+        color: #007bff;
+        text-decoration: none;
+      }
+      .signup-link a:hover {
+        text-decoration: underline;
+      }
+      .error {
+        color: red;
+        margin-bottom: 15px;
+        text-align: center;
+      }
     </style>
   </head>
   <body>
-    <h2>Login</h2>
-
     <form id="login-form">
+      <h2>Login</h2>
+      <div id="error-message" class="error"></div>
       <label for="email">Email</label>
       <input
         type="email"
@@ -55,7 +85,6 @@
         placeholder="Your email.."
         required
       />
-
       <label for="password">Password</label>
       <input
         type="password"
@@ -64,9 +93,7 @@
         placeholder="Your password.."
         required
       />
-
       <input type="submit" value="Login" />
-
       <div class="signup-link">
         Don't have an account? <a href="/signup">Signup</a>
       </div>

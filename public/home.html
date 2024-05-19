@@ -9,34 +9,51 @@
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
+        background-color: #f4f4f4;
+        color: #333;
       }
       header {
         background-color: #333;
         color: #fff;
-        padding: 10px 20px;
+        padding: 20px;
         text-align: center;
       }
       nav {
         background-color: #007bff;
         padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
       }
       nav ul {
         list-style-type: none;
         padding: 0;
         margin: 0;
-        text-align: center;
+        display: flex;
       }
       nav ul li {
-        display: inline;
         margin-right: 20px;
       }
       nav ul li a {
         color: #fff;
         text-decoration: none;
       }
+      nav button {
+        background-color: #0056b3;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+      }
+      nav button:hover {
+        background-color: #003f7f;
+      }
       .container {
-        max-width: 600px;
-        margin: 0 auto;
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       }
       .form-group {
         margin-bottom: 20px;
@@ -44,11 +61,14 @@
       label {
         display: block;
         font-weight: bold;
+        margin-bottom: 5px;
       }
       input[type="text"] {
         width: 100%;
-        padding: 8px;
+        padding: 10px;
         box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
       }
       button {
         padding: 10px 20px;
@@ -56,27 +76,35 @@
         color: #fff;
         border: none;
         cursor: pointer;
+        border-radius: 4px;
       }
       button:hover {
         background-color: #0056b3;
       }
-      .friend-request {
+      .friend-request,
+      .friend-list-item {
         display: flex;
         justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        padding: 10px;
+        background-color: #f9f9f9;
+        border: 1px solid #ccc;
+        border-radius: 4px;
       }
     </style>
   </head>
   <body>
     <header>
-      <h1>Friend Management and Room Creation/Joining</h1>
+      <h1>CHAT-CORD</h1>
     </header>
 
     <nav>
       <ul>
         <li><a href="#" id="friends-tab">Friends</a></li>
         <li><a href="#" id="rooms-tab">Rooms</a></li>
-        <button id="logout">Logout</button>
       </ul>
+      <button id="logout">Logout</button>
     </nav>
 
     <div class="container" id="friends-container">

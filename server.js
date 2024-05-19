@@ -26,11 +26,16 @@ mongoose.connect(db).then(() => {
   console.log("Database connected");
 });
 
+// Setting up socket.io
 const io = socketio(server);
+
+// Handling socket connections
 io.on("connection", (socket) => {
+  // Handling room join
   socket.on("join-room", (obj) => {
     const cuser = joinuser(socket.id, obj.username, obj.roomcode, obj.roomname);
     socket.join(cuser.roomcode);
+    // Sending all previous messages to the user
     const xyz = async () => {
       const allMsgs = await messagesFunctions.getAllMessages(cuser.roomcode);
       allMsgs.forEach((msg) => {
@@ -42,6 +47,7 @@ io.on("connection", (socket) => {
       });
     };
     xyz();
+    // Emitting welcome message to the user and broadcasting user connection to others in the room
     socket.emit(
       "message",
       formatmsg("Bot", `Welcome to chat-cord ${cuser.username}`)
@@ -50,8 +56,10 @@ io.on("connection", (socket) => {
       .to(cuser.roomcode)
       .emit("message", formatmsg("Bot", `${cuser.username} is connected`));
 
+    // Emitting updated users list to all users in the room
     io.to(cuser.roomcode).emit("users-info", getallusers(cuser.roomcode));
 
+    // Handling user disconnection
     socket.on("disconnect", () => {
       removeanuser(socket.id);
       socket.broadcast
@@ -64,6 +72,7 @@ io.on("connection", (socket) => {
     });
   });
 
+  // Handling private chat room join
   socket.on("join-pvt", (obj) => {
     const xyz = async () => {
       const allMsgs = await messagesFunctions.getAllPvtMessages(obj);
@@ -78,6 +87,8 @@ io.on("connection", (socket) => {
     xyz();
     socket.join(obj.username);
   });
+
+  // Handling private chat messages
   socket.on("chat-pvt", async (obj) => {
     const formattedmsg = formatmsg(obj.From, obj.message);
     const xyz = await pvtData.create({
@@ -86,9 +97,12 @@ io.on("connection", (socket) => {
       To: obj.To,
       Content: obj.message,
     });
+    // Emitting the message to both sender and receiver
     io.to(obj.To).emit("message", formattedmsg);
     io.to(obj.From).emit("message", formattedmsg);
   });
+
+  // Handling room chat messages
   socket.on("chat-message", async (msg) => {
     const user = getcurrentuser(socket.id);
     const formattedmsg = formatmsg(user.username, msg);
@@ -98,6 +112,7 @@ io.on("connection", (socket) => {
       Content: formattedmsg.message,
       Room: user.roomcode,
     });
+    // Emitting the message to all users in the room
     io.to(user.roomcode).emit("message", formattedmsg);
   });
 });
