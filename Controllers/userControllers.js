@@ -166,7 +166,10 @@ exports.login = catchAsync(async (req, res, next) => {
   }
 
   // Compare passwords
-  if (!(await bcrypt.compare(password, cuser.password))) {
+  // if (!(await bcrypt.compare(password, cuser.password))) {
+  //   return next(new appError("Incorrect password", 400));
+  // }
+  if (password != cuser.password) {
     return next(new appError("Incorrect password", 400));
   }
 
